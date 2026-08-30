@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sample metabolite utilization/production</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.17.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.24.0"></script>
+
+    <style>
+    #vis {
+        width: 1200px;
+        margin: 1em;
+        display: block;
+    }
+    </style>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Sample metabolite utilization/production
+      </h1>
+      <p class="subtitle">
+        Shows the net utilization (imports) or production (exports) of
+        metabolites of the full microbial community in each sample. If requested
+        exchange reactions and samples were clustered by euclidean average
+        linkage. Fluxes are shown on the log10 scale.<br>
+        Hover over each point to see its annotations. Use the "..." menu in the
+        upper right hand side to export the plot into various formats.
+      </p>
+    </div>
+    <!-- Container for the visualization -->
+    <div class="container">
+    <div id="vis"></div>
+    <a href="#" class="button is-primary" onclick="download_data('exchange_fluxes')">Download as CSV...</a>
+
+    </div>
+    <script>
+      // Assign the specification to a local variable vlSpec.
+      var vlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        width: 70,
+        height: 180,
+        data: {
+            values: [{"metabolite":"ch4_m","sample_id":"sample_3_2","flux":0.6387266754,"description":"Methane-e"},{"metabolite":"clo4_m","sample_id":"sample_3_2","flux":0.000001,"description":"Perchlorate-e0"},{"metabolite":"o2_m","sample_id":"sample_3_2","flux":0.9593061462,"description":"O2-e"},{"metabolite":"nh3_m","sample_id":"sample_3_2","flux":0.0951208883,"description":"NH3-e"},{"metabolite":"pi_m","sample_id":"sample_3_2","flux":0.0142352693,"description":"Phosphate-e"},{"metabolite":"so4_m","sample_id":"sample_3_2","flux":0.0016162452,"description":"Sulfate-e"},{"metabolite":"na1_m","sample_id":"sample_3_2","flux":0.000001,"description":"Na-c"},{"metabolite":"fe2_m","sample_id":"sample_3_2","flux":0.0001105016,"description":"Fe2-c"},{"metabolite":"cu2_m","sample_id":"sample_3_2","flux":0.0001185562,"description":"Cu2-c"},{"metabolite":"cl_m","sample_id":"sample_3_2","flux":0.0000374452,"description":"Cl-e"},{"metabolite":"fe3_m","sample_id":"sample_3_2","flux":0.0000703842,"description":"fe3-c"},{"metabolite":"cobalt2_m","sample_id":"sample_3_2","flux":0.0000128129,"description":"Co2-e"},{"metabolite":"mn2_m","sample_id":"sample_3_2","flux":0.0000374452,"description":"Mn2-e"},{"metabolite":"zn2_m","sample_id":"sample_3_2","flux":0.0000374452,"description":"Zn2-c"},{"metabolite":"k_m","sample_id":"sample_3_2","flux":0.0000374452,"description":"K-c"},{"metabolite":"mg2_m","sample_id":"sample_3_2","flux":0.0008235114,"description":"Mg-c"},{"metabolite":"ca2_m","sample_id":"sample_3_2","flux":0.0001185562,"description":"Ca2-e"},{"metabolite":"h2s_m","sample_id":"sample_3_2","flux":0.0000368258,"description":"H2S-e0"},{"metabolite":"ch4_m","sample_id":"sample_3_3","flux":0.1487440288,"description":"Methane-e"},{"metabolite":"clo4_m","sample_id":"sample_3_3","flux":0.000001,"description":"Perchlorate-e0"},{"metabolite":"o2_m","sample_id":"sample_3_3","flux":0.2252943456,"description":"O2-e"},{"metabolite":"nh3_m","sample_id":"sample_3_3","flux":0.0223998308,"description":"NH3-e"},{"metabolite":"pi_m","sample_id":"sample_3_3","flux":0.0032779286,"description":"Phosphate-e"},{"metabolite":"so4_m","sample_id":"sample_3_3","flux":0.0003575359,"description":"Sulfate-e"},{"metabolite":"na1_m","sample_id":"sample_3_3","flux":0.000001,"description":"Na-c"},{"metabolite":"fe2_m","sample_id":"sample_3_3","flux":0.0000264547,"description":"Fe2-c"},{"metabolite":"cu2_m","sample_id":"sample_3_3","flux":0.0000271513,"description":"Cu2-c"},{"metabolite":"cl_m","sample_id":"sample_3_3","flux":0.0000092585,"description":"Cl-e"},{"metabolite":"fe3_m","sample_id":"sample_3_3","flux":0.0000165247,"description":"fe3-c"},{"metabolite":"cobalt2_m","sample_id":"sample_3_3","flux":0.0000038247,"description":"Co2-e"},{"metabolite":"mn2_m","sample_id":"sample_3_3","flux":0.0000092585,"description":"Mn2-e"},{"metabolite":"zn2_m","sample_id":"sample_3_3","flux":0.0000092585,"description":"Zn2-c"},{"metabolite":"k_m","sample_id":"sample_3_3","flux":0.0000092585,"description":"K-c"},{"metabolite":"mg2_m","sample_id":"sample_3_3","flux":0.0001826618,"description":"Mg-c"},{"metabolite":"ca2_m","sample_id":"sample_3_3","flux":0.0000271513,"description":"Ca2-e"},{"metabolite":"h2s_m","sample_id":"sample_3_3","flux":0.000042686,"description":"H2S-e0"},{"metabolite":"ch4_m","sample_id":"sample_1_8","flux":2.7158431866,"description":"Methane-e"},{"metabolite":"clo4_m","sample_id":"sample_1_8","flux":0.9124597027,"description":"Perchlorate-e0"},{"metabolite":"o2_m","sample_id":"sample_1_8","flux":2.9550544506,"description":"O2-e"},{"metabolite":"nh3_m","sample_id":"sample_1_8","flux":0.1542278714,"description":"NH3-e"},{"metabolite":"pi_m","sample_id":"sample_1_8","flux":0.0120925402,"description":"Phosphate-e"},{"metabolite":"so4_m","sample_id":"sample_1_8","flux":0.0020358513,"description":"Sulfate-e"},{"metabolite":"na1_m","sample_id":"sample_1_8","flux":0.0004628093,"description":"Na-c"},{"metabolite":"fe2_m","sample_id":"sample_1_8","flux":0.0001565036,"description":"Fe2-c"},{"metabolite":"cu2_m","sample_id":"sample_1_8","flux":0.0000582769,"description":"Cu2-c"},{"metabolite":"cl_m","sample_id":"sample_1_8","flux":0.000001,"description":"Cl-e"},{"metabolite":"fe3_m","sample_id":"sample_1_8","flux":0.000040417,"description":"fe3-c"},{"metabolite":"cobalt2_m","sample_id":"sample_1_8","flux":0.0000410997,"description":"Co2-e"},{"metabolite":"mn2_m","sample_id":"sample_1_8","flux":0.0000406298,"description":"Mn2-e"},{"metabolite":"zn2_m","sample_id":"sample_1_8","flux":0.0000522391,"description":"Zn2-c"},{"metabolite":"k_m","sample_id":"sample_1_8","flux":0.0021267585,"description":"K-c"},{"metabolite":"mg2_m","sample_id":"sample_1_8","flux":0.0014996338,"description":"Mg-c"},{"metabolite":"ca2_m","sample_id":"sample_1_8","flux":0.0008663526,"description":"Ca2-e"},{"metabolite":"h2s_m","sample_id":"sample_1_8","flux":0.0013993492,"description":"H2S-e0"},{"metabolite":"ch4_m","sample_id":"sample_1_9","flux":1.8023924616,"description":"Methane-e"},{"metabolite":"clo4_m","sample_id":"sample_1_9","flux":0.5991848202,"description":"Perchlorate-e0"},{"metabolite":"o2_m","sample_id":"sample_1_9","flux":1.9016202832,"description":"O2-e"},{"metabolite":"nh3_m","sample_id":"sample_1_9","flux":0.0182269357,"description":"NH3-e"},{"metabolite":"pi_m","sample_id":"sample_1_9","flux":0.0013339872,"description":"Phosphate-e"},{"metabolite":"so4_m","sample_id":"sample_1_9","flux":0.0003916473,"description":"Sulfate-e"},{"metabolite":"na1_m","sample_id":"sample_1_9","flux":0.0000698883,"description":"Na-c"},{"metabolite":"fe2_m","sample_id":"sample_1_9","flux":0.000001,"description":"Fe2-c"},{"metabolite":"cu2_m","sample_id":"sample_1_9","flux":0.0000052324,"description":"Cu2-c"},{"metabolite":"cl_m","sample_id":"sample_1_9","flux":0.000001,"description":"Cl-e"},{"metabolite":"fe3_m","sample_id":"sample_1_9","flux":0.0000187401,"description":"fe3-c"},{"metabolite":"cobalt2_m","sample_id":"sample_1_9","flux":0.0000026385,"description":"Co2-e"},{"metabolite":"mn2_m","sample_id":"sample_1_9","flux":0.0000025676,"description":"Mn2-e"},{"metabolite":"zn2_m","sample_id":"sample_1_9","flux":0.0000043207,"description":"Zn2-c"},{"metabolite":"k_m","sample_id":"sample_1_9","flux":0.0003175915,"description":"K-c"},{"metabolite":"mg2_m","sample_id":"sample_1_9","flux":0.0002228901,"description":"Mg-c"},{"metabolite":"ca2_m","sample_id":"sample_1_9","flux":0.000127259,"description":"Ca2-e"},{"metabolite":"h2s_m","sample_id":"sample_1_9","flux":0.000001,"description":"H2S-e0"},{"metabolite":"ch4_m","sample_id":"sample_2_2","flux":10.53,"description":"Methane-e"},{"metabolite":"clo4_m","sample_id":"sample_2_2","flux":1.9541815267,"description":"Perchlorate-e0"},{"metabolite":"o2_m","sample_id":"sample_2_2","flux":8.5758253021,"description":"O2-e"},{"metabolite":"nh3_m","sample_id":"sample_2_2","flux":0.0039413588,"description":"NH3-e"},{"metabolite":"pi_m","sample_id":"sample_2_2","flux":0.0004813667,"description":"Phosphate-e"},{"metabolite":"so4_m","sample_id":"sample_2_2","flux":0.0000864022,"description":"Sulfate-e"},{"metabolite":"na1_m","sample_id":"sample_2_2","flux":0.000001,"description":"Na-c"},{"metabolite":"fe2_m","sample_id":"sample_2_2","flux":0.000001,"description":"Fe2-c"},{"metabolite":"cu2_m","sample_id":"sample_2_2","flux":0.0000040252,"description":"Cu2-c"},{"metabolite":"cl_m","sample_id":"sample_2_2","flux":0.000001,"description":"Cl-e"},{"metabolite":"fe3_m","sample_id":"sample_2_2","flux":0.0000064978,"description":"fe3-c"},{"metabolite":"cobalt2_m","sample_id":"sample_2_2","flux":0.0000016333,"description":"Co2-e"},{"metabolite":"mn2_m","sample_id":"sample_2_2","flux":0.0000016333,"description":"Mn2-e"},{"metabolite":"zn2_m","sample_id":"sample_2_2","flux":0.0000016333,"description":"Zn2-c"},{"metabolite":"k_m","sample_id":"sample_2_2","flux":0.0000016333,"description":"K-c"},{"metabolite":"mg2_m","sample_id":"sample_2_2","flux":0.0000183765,"description":"Mg-c"},{"metabolite":"ca2_m","sample_id":"sample_2_2","flux":0.0000040252,"description":"Ca2-e"},{"metabolite":"h2s_m","sample_id":"sample_2_2","flux":0.000001,"description":"H2S-e0"},{"metabolite":"ch4_m","sample_id":"sample_2_3","flux":9.36,"description":"Methane-e"},{"metabolite":"clo4_m","sample_id":"sample_2_3","flux":9.3468169941,"description":"Perchlorate-e0"},{"metabolite":"o2_m","sample_id":"sample_2_3","flux":0.0131869156,"description":"O2-e"},{"metabolite":"nh3_m","sample_id":"sample_2_3","flux":0.0023466198,"description":"NH3-e"},{"metabolite":"pi_m","sample_id":"sample_2_3","flux":0.0002843505,"description":"Phosphate-e"},{"metabolite":"so4_m","sample_id":"sample_2_3","flux":0.0000517292,"description":"Sulfate-e"},{"metabolite":"na1_m","sample_id":"sample_2_3","flux":0.000001,"description":"Na-c"},{"metabolite":"fe2_m","sample_id":"sample_2_3","flux":0.000001,"description":"Fe2-c"},{"metabolite":"cu2_m","sample_id":"sample_2_3","flux":0.000002368,"description":"Cu2-c"},{"metabolite":"cl_m","sample_id":"sample_2_3","flux":0.000001,"description":"Cl-e"},{"metabolite":"fe3_m","sample_id":"sample_2_3","flux":0.0000039159,"description":"fe3-c"},{"metabolite":"cobalt2_m","sample_id":"sample_2_3","flux":0.000001,"description":"Co2-e"},{"metabolite":"mn2_m","sample_id":"sample_2_3","flux":0.000001,"description":"Mn2-e"},{"metabolite":"zn2_m","sample_id":"sample_2_3","flux":0.000001,"description":"Zn2-c"},{"metabolite":"k_m","sample_id":"sample_2_3","flux":0.000001,"description":"K-c"},{"metabolite":"mg2_m","sample_id":"sample_2_3","flux":0.0000105844,"description":"Mg-c"},{"metabolite":"ca2_m","sample_id":"sample_2_3","flux":0.000002368,"description":"Ca2-e"},{"metabolite":"h2s_m","sample_id":"sample_2_3","flux":0.000001,"description":"H2S-e0"}]
+        },
+        mark: {
+            type: "rect",
+            tooltip: {content: "data"}
+        },
+        encoding: {
+          x: {
+            field: "sample_id",
+            type: "nominal",
+            axis: {title: "sample ID"},
+            sort: null
+          },
+          y: {
+            field: "metabolite",
+            type: "nominal",
+            sort: null
+          },
+          color: {
+              field: "flux",
+              type: "quantitative",
+              scale: {type: "log", scheme: "viridis"}
+          }
+        }
+      };
+
+      // Embed the visualization in the container with id `vis`
+      vegaEmbed("#vis", vlSpec, {renderer: "svg"}).then(function(r) {
+        svg = document.querySelector("#vis svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "auto");
+      });
+
+      files = {'exchange_fluxes': 'metabolite,sample_id,flux,description\nch4_m,sample_3_2,0.638726675440086,Methane-e\nclo4_m,sample_3_2,1e-06,Perchlorate-e0\no2_m,sample_3_2,0.9593061461586134,O2-e\nnh3_m,sample_3_2,0.095120888277353,NH3-e\npi_m,sample_3_2,0.0142352692973885,Phosphate-e\nso4_m,sample_3_2,0.0016162452374554,Sulfate-e\nna1_m,sample_3_2,1e-06,Na-c\nfe2_m,sample_3_2,0.0001105015795843,Fe2-c\ncu2_m,sample_3_2,0.0001185561629252,Cu2-c\ncl_m,sample_3_2,3.744519237675112e-05,Cl-e\nfe3_m,sample_3_2,7.038422416199566e-05,fe3-c\ncobalt2_m,sample_3_2,1.2812882714276304e-05,Co2-e\nmn2_m,sample_3_2,3.744519237675113e-05,Mn2-e\nzn2_m,sample_3_2,3.744519237675113e-05,Zn2-c\nk_m,sample_3_2,3.744519238019023e-05,K-c\nmg2_m,sample_3_2,0.0008235113643316,Mg-c\nca2_m,sample_3_2,0.0001185561629171,Ca2-e\nh2s_m,sample_3_2,3.682579763014847e-05,H2S-e0\nch4_m,sample_3_3,0.1487440287907247,Methane-e\nclo4_m,sample_3_3,1e-06,Perchlorate-e0\no2_m,sample_3_3,0.2252943455795957,O2-e\nnh3_m,sample_3_3,0.022399830780229,NH3-e\npi_m,sample_3_3,0.0032779285568321,Phosphate-e\nso4_m,sample_3_3,0.0003575358536435,Sulfate-e\nna1_m,sample_3_3,1e-06,Na-c\nfe2_m,sample_3_3,2.645470129891692e-05,Fe2-c\ncu2_m,sample_3_3,2.715129709298472e-05,Cu2-c\ncl_m,sample_3_3,9.258523149924258e-06,Cl-e\nfe3_m,sample_3_3,1.6524749227642133e-05,fe3-c\ncobalt2_m,sample_3_3,3.824728623447302e-06,Co2-e\nmn2_m,sample_3_3,9.258523148811907e-06,Mn2-e\nzn2_m,sample_3_3,9.258523156378988e-06,Zn2-c\nk_m,sample_3_3,9.25852316317568e-06,K-c\nmg2_m,sample_3_3,0.0001826617535591,Mg-c\nca2_m,sample_3_3,2.715129709298472e-05,Ca2-e\nh2s_m,sample_3_3,4.268599002704869e-05,H2S-e0\nch4_m,sample_1_8,2.71584318656808,Methane-e\nclo4_m,sample_1_8,0.912459702676768,Perchlorate-e0\no2_m,sample_1_8,2.955054450618127,O2-e\nnh3_m,sample_1_8,0.1542278714422922,NH3-e\npi_m,sample_1_8,0.0120925401619971,Phosphate-e\nso4_m,sample_1_8,0.0020358512792919,Sulfate-e\nna1_m,sample_1_8,0.0004628093248925,Na-c\nfe2_m,sample_1_8,0.0001565035775,Fe2-c\ncu2_m,sample_1_8,5.827688238920189e-05,Cu2-c\ncl_m,sample_1_8,1e-06,Cl-e\nfe3_m,sample_1_8,4.0417017714844405e-05,fe3-c\ncobalt2_m,sample_1_8,4.1099743292306855e-05,Co2-e\nmn2_m,sample_1_8,4.062981529716478e-05,Mn2-e\nzn2_m,sample_1_8,5.22391056425614e-05,Zn2-c\nk_m,sample_1_8,0.0021267585248447,K-c\nmg2_m,sample_1_8,0.0014996337633874,Mg-c\nca2_m,sample_1_8,0.0008663526496316,Ca2-e\nh2s_m,sample_1_8,0.0013993492224371,H2S-e0\nch4_m,sample_1_9,1.802392461573129,Methane-e\nclo4_m,sample_1_9,0.5991848202493406,Perchlorate-e0\no2_m,sample_1_9,1.901620283211872,O2-e\nnh3_m,sample_1_9,0.0182269357135653,NH3-e\npi_m,sample_1_9,0.0013339871646271,Phosphate-e\nso4_m,sample_1_9,0.0003916473053807,Sulfate-e\nna1_m,sample_1_9,6.988830944720803e-05,Na-c\nfe2_m,sample_1_9,1e-06,Fe2-c\ncu2_m,sample_1_9,5.232427887355896e-06,Cu2-c\ncl_m,sample_1_9,1e-06,Cl-e\nfe3_m,sample_1_9,1.874012597431924e-05,fe3-c\ncobalt2_m,sample_1_9,2.638527660967081e-06,Co2-e\nmn2_m,sample_1_9,2.5675643692274343e-06,Mn2-e\nzn2_m,sample_1_9,4.320670092204383e-06,Zn2-c\nk_m,sample_1_9,0.0003175914866364,K-c\nmg2_m,sample_1_9,0.0002228900901286,Mg-c\nca2_m,sample_1_9,0.0001272590298606,Ca2-e\nh2s_m,sample_1_9,1e-06,H2S-e0\nch4_m,sample_2_2,10.53,Methane-e\nclo4_m,sample_2_2,1.9541815267483948,Perchlorate-e0\no2_m,sample_2_2,8.575825302143231,O2-e\nnh3_m,sample_2_2,0.0039413587832564,NH3-e\npi_m,sample_2_2,0.0004813666609585,Phosphate-e\nso4_m,sample_2_2,8.640217731490994e-05,Sulfate-e\nna1_m,sample_2_2,1e-06,Na-c\nfe2_m,sample_2_2,1e-06,Fe2-c\ncu2_m,sample_2_2,4.025187907241442e-06,Cu2-c\ncl_m,sample_2_2,1e-06,Cl-e\nfe3_m,sample_2_2,6.497835374370903e-06,fe3-c\ncobalt2_m,sample_2_2,1.6333003729114248e-06,Co2-e\nmn2_m,sample_2_2,1.6333003729114248e-06,Mn2-e\nzn2_m,sample_2_2,1.6333003729114248e-06,Zn2-c\nk_m,sample_2_2,1.6333003713953076e-06,K-c\nmg2_m,sample_2_2,1.8376513111206805e-05,Mg-c\nca2_m,sample_2_2,4.025187905654093e-06,Ca2-e\nh2s_m,sample_2_2,1e-06,H2S-e0\nch4_m,sample_2_3,9.36,Methane-e\nclo4_m,sample_2_3,9.34681699410499,Perchlorate-e0\no2_m,sample_2_3,0.0131869155553889,O2-e\nnh3_m,sample_2_3,0.0023466197781286,NH3-e\npi_m,sample_2_3,0.0002843505317997,Phosphate-e\nso4_m,sample_2_3,5.172921880685229e-05,Sulfate-e\nna1_m,sample_2_3,1e-06,Na-c\nfe2_m,sample_2_3,1e-06,Fe2-c\ncu2_m,sample_2_3,2.368002242292277e-06,Cu2-c\ncl_m,sample_2_3,1e-06,Cl-e\nfe3_m,sample_2_3,3.915873797666336e-06,fe3-c\ncobalt2_m,sample_2_3,1e-06,Co2-e\nmn2_m,sample_2_3,1e-06,Mn2-e\nzn2_m,sample_2_3,1e-06,Zn2-c\nk_m,sample_2_3,1e-06,K-c\nmg2_m,sample_2_3,1.0584387890588688e-05,Mg-c\nca2_m,sample_2_3,2.368002239721556e-06,Ca2-e\nh2s_m,sample_2_3,1e-06,H2S-e0\n'};
+
+function download_data(key) {
+    var blob = new Blob([files[key]], {type: "text/csv;charset=utf-8;"}),
+        filename = key + ".csv",
+        url = window.URL.createObjectURL(blob);
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
+    </script>
+  </section>
+  </body>
+</html>
