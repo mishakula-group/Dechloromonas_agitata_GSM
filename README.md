@@ -4,21 +4,12 @@ This repository contains the genome-scale metabolic model (GSM) of *Dechloromona
 
 ## Repository structure
 
-<<<<<<< HEAD
 - `iEK643/` — final model files and model versions.
   - `iEK643.xml` — final SBML model.
   - `report_iEK643.html` — report for the final model.
   - `agitata_micro_map.json` — metabolic map data.
   - `final_files/` — model versions.
-=======
-- `iEK643/` — SBML model versions, HTML model reports, and final model files.
-  - `agitata_vjgb_1.xml`, `agitata_vjgb_2.xml`, `agitata_vjgb_3.xml` — versioned model files.
-  - `agitata_vjgb_cleaned.xml` — cleaned model.
-  - `report_agitata_vjgb_1.html`, `report_agitata_vjgb_2.html`, `report_agitata_vjgb_3.html`, `report_agitata_vjgb_cleaned.html` — model reports.
-  - `final_files/iEK643.xml` — final SBML model.
-  - `final_files/report_iEK643.html` — report for the final model.
-  - `final_files/agitata_micro_map.json` — metabolic map data.
->>>>>>> 9222daf3605daa3d093ed176404a68e8a89bd3e9
+
 - `Jupyter-notebooks/` — notebooks for model curation and aerobic community analysis.
   - `curation_iEK643.ipynb`
   - `aerobic_community_agitata.ipynb`
@@ -34,10 +25,8 @@ This repository contains the genome-scale metabolic model (GSM) of *Dechloromona
   - `20zr_community/` — *D. agitata*–20ZR models, tables, and plots.
   - `album_community/` — *D. agitata*–*Methylobacterium album* models, tables, and plots.
   - `mcaps_community/` — *D. agitata*–*Methylobacterium capsulatus* models, tables, and plots.
-<<<<<<< HEAD
-- `Supplementary/` — supplementary figures, `supplementary_figures.pdf` and `supplementary_tables.xlsx`.
-=======
-- `Supplementary/` — supplementary figures, `supplementary_figures.pdf`, and `supplementary_tables.xlsx`.
 
-Notebook paths may refer to the original working environment and may need updating before running on another computer.
->>>>>>> 9222daf3605daa3d093ed176404a68e8a89bd3e9
+- `Supplementary/` — supplementary figures, `supplementary_figures.pdf` and `supplementary_tables.xlsx`.
+
+
+
