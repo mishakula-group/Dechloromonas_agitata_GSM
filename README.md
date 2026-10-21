@@ -8,7 +8,7 @@ This repository contains the genome-scale metabolic model (GSM) of *Dechloromona
   - `iEK643.xml` — final SBML model.
   - `report_iEK643.html` — report for the final model.
   - `agitata_micro_map.json` — metabolic map data.
-  - `final_files/` — model versions.
+  - `supplementary_models/` — model versions.
 
 - `Jupyter-notebooks/` — notebooks for model curation and aerobic community analysis.
   - `curation_iEK643.ipynb`
